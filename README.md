@@ -31,3 +31,10 @@ python or bash script for nn
 tag support? then -> fnt
 
 what about the folder structure?
+
+# requirements
+
+rg
+rga
+fzf
+fzf-tmux
