@@ -4,7 +4,9 @@ Simple note taking and organization of text files. No full blown wiki.
 
 # todo
 
-whats with doublicates?
+prepare for github display
+
+doublicates will be appended
 
 - readme file (no wiki, etc + how to source and use + how to search idea + WHAT IT IS NOT)
   - zsh file to source from

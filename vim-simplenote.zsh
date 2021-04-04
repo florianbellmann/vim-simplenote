@@ -51,6 +51,8 @@ nn()(
     touch $FILENAME
 
     #writing scaffold
+    echo "" >> $FILENAME
+    echo "" >> $FILENAME
     echo "---" >> $FILENAME
     echo "title: $1" >> $FILENAME
     echo "date: $(date +"%d.%m.%Y")" >> $FILENAME
@@ -78,6 +80,8 @@ nn()(
       touch $FILENAME
 
       #writing scaffold
+      echo "" >> $FILENAME
+      echo "" >> $FILENAME
       echo "---" >> $FILENAME
       echo "title: $1" >> $FILENAME
       echo "date: $(date +"%d.%m.%Y")" >> $FILENAME
@@ -93,6 +97,17 @@ nn()(
   
   # navigate back to previous folder
   cd -
+)
+
+qn()(
+  file_name="quicknote_$(date +"%Y-%m-%d")"
+  nn $file_name
+)
+
+wn()(
+  day=$(echo "Mon\nTue\nWed\nThu\nFri\nSat\nSun\n" | fzf --cycle --ansi)
+  file_name="weekly_$(date -v +$day +"%Y-%m-%d")"
+  nn $file_name
 )
 
 # global note location
