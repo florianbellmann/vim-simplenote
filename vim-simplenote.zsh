@@ -7,7 +7,9 @@ fn() (
   IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0)")
   key=$(head -1 <<<"$out")
   file=$(head -2 <<<"$out" | tail -1)
-  ${EDITOR:-vim} "$file"
+  if [ -n "$file" ]; then
+    ${EDITOR:-vim} "$file"
+  fi
 
   # navigate back to previous folder
   cd -
@@ -21,12 +23,14 @@ fin() {
   local file
   file="$(
     FZF_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
-      fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 10 {q} {}" \
+      fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 25 {q} {}" \
       --phony -q "$1" \
       --bind "change:reload:$RG_PREFIX {q}" \
       --preview-window="70%:wrap"
-  )" &&
+  )" 
+  if [ -n "$file" ]; then
     ${EDITOR:-vim} "$file"
+  fi
 
   # navigate back to previous folder
   cd -
@@ -62,7 +66,7 @@ nn()(
     echo "" >> $FILENAME
 
     # open note
-    ${EDITOR:-vim} "$FILENAME"
+    ${EDITOR:-vim} "$file"
   else
   cd $NOTE_DIR
     local dir
@@ -75,7 +79,6 @@ nn()(
     else
       echo "Creating note $1 with tag #$dir."
       FILENAME="$dir/$1.md"
-      echo $FILENAME
       mkdir -p $dir 
       touch $FILENAME
 
@@ -91,7 +94,9 @@ nn()(
       echo "" >> $FILENAME
 
       # open note
-      ${EDITOR:-vim} "$FILENAME"
+      if [ -n "$FILENAME" ]; then
+        ${EDITOR:-vim} "$FILENAME"
+      fi
     fi
   fi
   
