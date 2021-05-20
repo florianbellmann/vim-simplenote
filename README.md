@@ -10,3 +10,6 @@ rga
 fzf
 fzf-tmux
 
+# usage
+
+source vim-simplenote.zsh in your .zshrc
