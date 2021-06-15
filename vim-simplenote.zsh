@@ -49,7 +49,7 @@ nn()(
   if ! [ -z "$2" ]
   then
     echo "Creating note $1 with tag #$2."
-    FILENAME="$2/$1.md"
+    FILENAME="$2/$(date +"%Y-%m-%d")_$1.md"
     echo $FILENAME
     mkdir -p $2 
     touch $FILENAME
@@ -78,7 +78,7 @@ nn()(
       exit 1
     else
       echo "Creating note $1 with tag #$dir."
-      FILENAME="$dir/$1.md"
+      FILENAME="$dir/$(date +"%Y-%m-%d")_$1.md"
       mkdir -p $dir 
       touch $FILENAME
 
