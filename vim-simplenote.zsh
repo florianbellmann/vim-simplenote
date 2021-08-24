@@ -55,13 +55,13 @@ nn()(
   if ! [ -z "$2" ]
   then
     echo "Creating note $1 with tag #$2."
-    FILENAME="$2/$(date +"%Y-%m-%d")_$1.md"
+    FILENAME="$2/$(date +"%Y-%m-%d")_$1.txt"
     echo $FILENAME
     mkdir -p $2 
     touch $FILENAME
 
     #writing scaffold
-    echo "" >> $FILENAME
+    echo "# vim: syntax=markdown" >> $FILENAME
     echo "" >> $FILENAME
     echo "---" >> $FILENAME
     echo "title: $1" >> $FILENAME
@@ -84,12 +84,12 @@ nn()(
       exit 1
     else
       echo "Creating note $1 with tag #$dir."
-      FILENAME="$dir/$(date +"%Y-%m-%d")_$1.md"
+      FILENAME="$dir/$(date +"%Y-%m-%d")_$1.txt"
       mkdir -p $dir 
       touch $FILENAME
 
       #writing scaffold
-      echo "" >> $FILENAME
+      echo "# vim: syntax=markdown" >> $FILENAME
       echo "" >> $FILENAME
       echo "---" >> $FILENAME
       echo "title: $1" >> $FILENAME
@@ -134,12 +134,12 @@ nd()(
     exit 1
   else
     echo "Creating decision journal node $1 with tag #$dir."
-    FILENAME="$dir/$file_name.md"
+    FILENAME="$dir/$file_name.txt"
     mkdir -p $dir 
     touch $FILENAME
 
     #writing scaffold
-    echo "" >> $FILENAME
+    echo "# vim: syntax=markdown" >> $FILENAME
     echo "" >> $FILENAME
     echo "---" >> $FILENAME
     echo "title: $1" >> $FILENAME
