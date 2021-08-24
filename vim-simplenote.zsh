@@ -15,6 +15,12 @@ fn() (
   cd -
 )
 
+# browse notes with ranger
+rn() (
+  cd $NOTE_DIR
+  ranger
+)
+
 # find string in all notes
 fin() {
   cd $NOTE_DIR
@@ -105,14 +111,81 @@ nn()(
 )
 
 qn()(
-  file_name="quicknote_$(date +"%Y-%m-%d")"
+  file_name="$(date +"%Y-%m-%d")_quicknote"
   nn $file_name
 )
 
 wn()(
   day=$(echo "Mon\nTue\nWed\nThu\nFri\nSat\nSun\n" | fzf --cycle --ansi)
-  file_name="weekly_$(date -v +$day +"%Y-%m-%d")"
+  file_name="$(date -v +$day +"%Y-%m-%d")_weekly"
   nn $file_name
+)
+
+nd()(
+  file_name="$(date +"%Y-%m-%d")_decision"
+  
+  cd $NOTE_DIR
+  local dir
+  dir=$(find . -path '*/\.*' -prune -o -type d -print 2>/dev/null | fzf +m)
+  if [ -z "$dir" ]
+  then
+    echo "Tag not found. Either provide a valid tag or specify new tag directly."
+    echo -e "\nUsage:\n$0 [filename tag] \n"
+    exit 1
+  else
+    echo "Creating decision journal node $1 with tag #$dir."
+    FILENAME="$dir/$file_name.md"
+    mkdir -p $dir 
+    touch $FILENAME
+
+    #writing scaffold
+    echo "" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "---" >> $FILENAME
+    echo "title: $1" >> $FILENAME
+    echo "date: $(date +"%d.%m.%Y")" >> $FILENAME
+    echo "tag: #$(echo $dir | cut -d '/' -f 2)" >> $FILENAME
+    echo "---" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# Mental/Physical State" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "Energized | Focused | Relaxed | Confident | Tired | Accepting | Accomodating | Anxious | Resigned | Frustrated | Angry" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# The situation / Context" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# The problem statement or frame" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# The variables that govern the situation include" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# The complications/complexities as I see them" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# Alternatives that were seriously considered and not chosen were" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# Explain the range of outcomes" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# What I expect to happen and the actual probabilities are" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# The outcome" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# Review Date" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "- $(date -v +6m 2> /dev/null) (6 months after decision date)" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# What happened and what I learned" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "# review DONE?" >> $FILENAME
+    echo "" >> $FILENAME
+    echo "FALSE" >> $FILENAME
+
+    # open note
+    if [ -n "$FILENAME" ]; then
+      ${EDITOR:-vim} "$FILENAME"
+    fi
+  fi
+  
+  # navigate back to previous folder
+  cd -
 )
 
 # global note location
