@@ -117,7 +117,7 @@ qn()(
 
 wn()(
   day=$(echo "Mon\nTue\nWed\nThu\nFri\nSat\nSun\n" | fzf --cycle --ansi)
-  file_name="$(date -v +$day +"%Y-%m-%d")_weekly"
+  file_name="_weekly"
   nn $file_name
 )
 
