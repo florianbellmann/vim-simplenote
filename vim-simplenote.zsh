@@ -189,5 +189,5 @@ nd()(
 )
 
 # global note location
-export NOTE_DIR='/Users/florianj/Private/vim-simplenote/content'
+export NOTE_DIR='~/Private/vim-simplenote/content'
 
