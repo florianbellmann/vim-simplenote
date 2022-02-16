@@ -117,7 +117,7 @@ qn()(
 
 wn()(
   day=$(echo "Mon\nTue\nWed\nThu\nFri\nSat\nSun\n" | fzf --cycle --ansi)
-  file_name="_weekly"
+  file_name="weekly"
   nn $file_name
 )
 
@@ -185,6 +185,12 @@ nd()(
   fi
   
   # navigate back to previous folder
+  cd -
+)
+
+prunenotes()(
+  cd $NOTE_DIR 
+  find . -type f -exec wc -w {} + | sort -rn | tail -n 20 | awk '{print $2}' | xargs nvim
   cd -
 )
 
